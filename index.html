@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Um convite</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+            overflow: hidden;
+            color: #333;
+        }
+
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .screen.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .card {
+            width: min(450px, 100%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px 25px;
+            border-radius: 28px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 15px;
+            color: #e6396f;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* IMAGENS
+           Coloque suas imagens na pasta "imagens".
+           Exemplo: imagens/olhando.png
+        */
+        .imagem {
+            width: 150px;
+            max-width: 80%;
+            height: auto;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            display: block;
+        }
+
+        /* PRIMEIRA TELA */
+
+        .buttons {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            margin-top: 15px;
+        }
+
+        button {
+            border: none;
+            border-radius: 50px;
+            padding: 15px 28px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        #yesBtn {
+            background: #e6396f;
+            color: white;
+            position: absolute;
+            left: 50%;
+            top: 40px;
+            transform: translateX(-110%);
+            z-index: 2;
+        }
+
+        #noBtn {
+            background: #ddd;
+            color: #555;
+            position: absolute;
+            left: 50%;
+            top: 40px;
+            transform: translateX(10%);
+        }
+
+        /* DATA */
+
+        .date-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .date-btn {
+            background: #e6396f;
+            color: white;
+            width: 100%;
+        }
+
+        .date-btn:hover {
+            transform: scale(1.03);
+        }
+
+        /* COMIDA */
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            border: 2px solid #f2b6c7;
+            border-radius: 18px;
+            padding: 15px;
+            font-size: 16px;
+            resize: none;
+            outline: none;
+            font-family: inherit;
+        }
+
+        textarea:focus {
+            border-color: #e6396f;
+        }
+
+        .send-btn {
+            width: 100%;
+            margin-top: 15px;
+            background: #25d366;
+            color: white;
+        }
+
+        /* FINAL */
+
+        .final-emojis {
+            font-size: 45px;
+            margin: 20px 0;
+            animation: bounce 1.5s infinite;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 25px;
+            animation: floatUp linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 26px;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- TELA 1 -->
+    <!-- ========================= -->
+
+    <section class="screen active" id="screen1">
+        <div class="card">
+
+            <!-- Troque pelo nome da sua imagem -->
+            <img src="imagens/date1.jfif" class="imagem" alt="Imagem da primeira tela">
+
+            <h1>Aceita um date comigo?</h1>
+
+            <p>
+                Prometo que vai ser legal...<br>
+                ou pelo menos eu vou tentar muito.
+            </p>
+
+            <div class="buttons">
+
+                <button id="yesBtn">
+                    SIM
+                </button>
+
+                <button id="noBtn">
+                    NÃO
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- TELA 2 -->
+    <!-- ========================= -->
+
+    <section class="screen" id="screen2">
+        <div class="card">
+
+            <img src="imagens/date2.jfif" class="imagem" alt="Imagem da escolha de data">
+
+            <h1>Agora escolha o dia</h1>
+
+            <p>
+                Qual desses dias fica melhor para você?
+            </p>
+
+            <div class="date-options">
+
+                <button class="date-btn" onclick="selectDate('29/08')">
+                    29/08
+                </button>
+
+                <button class="date-btn" onclick="selectDate('05/09')">
+                    05/09
+                </button>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- TELA 3 -->
+    <!-- ========================= -->
+
+    <section class="screen" id="screen3">
+        <div class="card">
+
+            <img src="imagens/date3.jfif" class="imagem" alt="Imagem de comida">
+
+            <h1>Agora uma informação importante...</h1>
+
+            <p>
+                O que você gosta de comer?
+            </p>
+
+            <textarea
+                id="foodInput"
+                placeholder="Pode escrever tudo que você gosta..."
+            ></textarea>
+
+            <button class="send-btn" onclick="sendAnswer()">
+                Enviar resposta
+            </button>
+
+        </div>
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- TELA 4 -->
+    <!-- ========================= -->
+
+    <section class="screen" id="screen4">
+        <div class="card">
+
+            <img src="imagens/date4.jfif" class="imagem" alt="Imagem final">
+
+            <h1>Obrigado!</h1>
+
+            <div class="final-emojis">
+                😊 🥰 😎 💕 ✨
+            </div>
+
+            <p>
+                Agora é só esperar pelo nosso date.
+            </p>
+
+            <p>
+                Prometo fazer valer a pena.
+            </p>
+
+        </div>
+    </section>
+
+
+    <script>
+
+        /* ========================================
+           CONFIGURAÇÃO
+        ======================================== */
+
+        // COLOQUE AQUI SEU NÚMERO DO WHATSAPP
+        // Exemplo:
+        // const MEU_WHATSAPP = "5549999999999";
+
+        const MEU_WHATSAPP = "5549998055438";
+
+
+        /* ========================================
+           CONTROLE DAS TELAS
+        ======================================== */
+
+        function showScreen(number) {
+
+            document.querySelectorAll(".screen").forEach(screen => {
+                screen.classList.remove("active");
+            });
+
+            document
+                .getElementById("screen" + number)
+                .classList.add("active");
+        }
+
+
+        /* ========================================
+           BOTÃO SIM
+        ======================================== */
+
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+
+        let yesSize = 1;
+
+        yesBtn.addEventListener("click", () => {
+
+            createHearts();
+
+            setTimeout(() => {
+                showScreen(2);
+            }, 500);
+
+        });
+
+
+        /* ========================================
+           BOTÃO NÃO FUGINDO
+           ======================================== */
+
+        function moveNoButton() {
+
+            const container = document.querySelector(".buttons");
+
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            const buttonWidth = noBtn.offsetWidth;
+            const buttonHeight = noBtn.offsetHeight;
+
+            const maxX = Math.max(0, containerWidth - buttonWidth);
+            const maxY = Math.max(0, containerHeight - buttonHeight);
+
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+            noBtn.style.transform = "none";
+
+            // O botão SIM cresce a cada tentativa
+            yesSize += 0.15;
+
+            yesBtn.style.transform =
+                `translateX(-110%) scale(${yesSize})`;
+        }
+
+
+        // Computador
+        noBtn.addEventListener("mouseenter", moveNoButton);
+
+        // Celular
+        noBtn.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Clique
+        noBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+
+        /* ========================================
+           ESCOLHA DA DATA
+           ======================================== */
+
+        let selectedDate = "";
+
+        function selectDate(date) {
+
+            selectedDate = date;
+
+            showScreen(3);
+        }
+
+
+        /* ========================================
+           ENVIO DA RESPOSTA PELO WHATSAPP
+           ======================================== */
+
+        function sendAnswer() {
+
+            const food = document
+                .getElementById("foodInput")
+                .value
+                .trim();
+
+            if (!food) {
+
+                alert("Me conta pelo menos uma coisa que você gosta de comer.");
+
+                return;
+            }
+
+            const message =
+                `Aceitei o date!%0A%0A` +
+                `Data escolhida: ${selectedDate}%0A` +
+                `O que eu gosto de comer: ${food}`;
+
+            const whatsappURL =
+                `https://wa.me/${MEU_WHATSAPP}?text=${message}`;
+
+            window.open(whatsappURL, "_blank");
+
+            setTimeout(() => {
+
+                showScreen(4);
+                createHearts();
+
+            }, 500);
+        }
+
+
+        /* ========================================
+           ANIMAÇÃO DE CORAÇÕES
+           ======================================== */
+
+        function createHearts() {
+
+            for (let i = 0; i < 18; i++) {
+
+                const heart = document.createElement("div");
+
+                heart.classList.add("heart");
+
+                heart.innerHTML =
+                    ["♥", "♡", "✦", "✧"][Math.floor(Math.random() * 4)];
+
+                heart.style.left =
+                    Math.random() * 100 + "vw";
+
+                heart.style.bottom = "-30px";
+
+                heart.style.animationDuration =
+                    (3 + Math.random() * 3) + "s";
+
+                heart.style.fontSize =
+                    (18 + Math.random() * 20) + "px";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+        }
+
+    </script>
+
+</body>
+</html>

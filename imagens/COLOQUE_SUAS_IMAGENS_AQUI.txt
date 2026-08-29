@@ -1,0 +1,7 @@
+Coloque aqui as imagens usadas pelo site:
+- olhando.png
+- data.png
+- comida.png
+- final.png
+
+Você pode alterar os nomes/caminhos diretamente no index.html.
